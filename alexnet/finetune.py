@@ -11,7 +11,7 @@ from preprocessor import BatchPreprocessor
 
 tf.app.flags.DEFINE_float('learning_rate', 0.0001, 'Learning rate for adam optimizer')
 tf.app.flags.DEFINE_float('dropout_keep_prob', 0.5, 'Dropout keep probability')
-tf.app.flags.DEFINE_integer('num_epochs', 3, 'Number of epochs for training')
+tf.app.flags.DEFINE_integer('num_epochs', 10, 'Number of epochs for training')
 tf.app.flags.DEFINE_integer('num_classes', 2, 'Number of classes')
 tf.app.flags.DEFINE_integer('batch_size', 1, 'Batch size')
 tf.app.flags.DEFINE_string('train_layers', 'fc8,fc7', 'Finetuning layers, seperated by commas')

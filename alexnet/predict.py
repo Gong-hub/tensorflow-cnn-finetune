@@ -1,21 +1,23 @@
 import os, sys
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import cv2
 import datetime
 from model import AlexNetModel
 sys.path.insert(0, '../utils')
 
 
-tf.app.flags.DEFINE_string('ckpt', '', 'Checkpoint path; it must end with ".ckpt"')
-tf.app.flags.DEFINE_integer('num_classes', 26, 'Number of classes')
-tf.app.flags.DEFINE_string('input_image', '', 'The path of input image')
+tf.app.flags.DEFINE_string('ckpt', r'E:\gitfile\tensorflow-cnn-finetune\training\alexnet_20230214_140712\checkpoint\model_epoch10.ckpt', 'Checkpoint path; it must end with ".ckpt"')
+tf.app.flags.DEFINE_integer('num_classes', 2, 'Number of classes')
+tf.app.flags.DEFINE_string('input_image', r'E:\gitfile\tensorflow-cnn-finetune\data\c_869.jpg', 'The path of input image')
 
 FLAGS = tf.app.flags.FLAGS
 
 
 def main(_):
     # Placeholders
+    tf.disable_eager_execution()
+
     x = tf.placeholder(tf.float32, [1, 227, 227, 3])
     dropout_keep_prob = tf.placeholder(tf.float32)
 
