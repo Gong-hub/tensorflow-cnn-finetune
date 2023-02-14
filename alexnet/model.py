@@ -1,7 +1,7 @@
 """
 Derived from: https://github.com/kratzert/finetune_alexnet_with_tensorflow/
 """
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import numpy as np
 
 
@@ -84,7 +84,7 @@ def conv(x, filter_height, filter_width, num_filters, stride_y, stride_x, name, 
     convolve = lambda i, k: tf.nn.conv2d(i, k, strides=[1, stride_y, stride_x, 1], padding=padding)
 
     with tf.variable_scope(name) as scope:
-        weights = tf.get_variable('weights', shape=[filter_height, filter_width, input_channels/groups, num_filters])
+        weights = tf.get_variable('weights', shape=[filter_height, filter_width, int(input_channels/groups), num_filters])
         biases = tf.get_variable('biases', shape=[num_filters])
 
         if groups == 1:

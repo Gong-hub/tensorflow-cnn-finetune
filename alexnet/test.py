@@ -1,6 +1,6 @@
 import os, sys
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import datetime
 from model import AlexNetModel
 sys.path.insert(0, '../utils')
@@ -9,7 +9,7 @@ from preprocessor import BatchPreprocessor
 
 tf.app.flags.DEFINE_string('ckpt', '', 'Checkpoint path; it must end with ".ckpt"')
 tf.app.flags.DEFINE_integer('num_classes', 26, 'Number of classes')
-tf.app.flags.DEFINE_string('test_file', '../data/val.txt', 'Test dataset file')
+tf.app.flags.DEFINE_string('test_file', '../data/val1.txt', 'Test dataset file')
 tf.app.flags.DEFINE_integer('batch_size', 128, 'Batch size')
 
 FLAGS = tf.app.flags.FLAGS
@@ -17,6 +17,7 @@ FLAGS = tf.app.flags.FLAGS
 
 def main(_):
     # Placeholders
+    tf.disable_eager_execution()
     x = tf.placeholder(tf.float32, [FLAGS.batch_size, 227, 227, 3])
     y = tf.placeholder(tf.float32, [None, FLAGS.num_classes])
     dropout_keep_prob = tf.placeholder(tf.float32)

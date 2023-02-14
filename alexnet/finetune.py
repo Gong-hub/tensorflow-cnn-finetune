@@ -1,6 +1,8 @@
 import os, sys
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
 import datetime
 from model import AlexNetModel
 sys.path.insert(0, '../utils')
@@ -9,9 +11,9 @@ from preprocessor import BatchPreprocessor
 
 tf.app.flags.DEFINE_float('learning_rate', 0.0001, 'Learning rate for adam optimizer')
 tf.app.flags.DEFINE_float('dropout_keep_prob', 0.5, 'Dropout keep probability')
-tf.app.flags.DEFINE_integer('num_epochs', 10, 'Number of epochs for training')
-tf.app.flags.DEFINE_integer('num_classes', 26, 'Number of classes')
-tf.app.flags.DEFINE_integer('batch_size', 128, 'Batch size')
+tf.app.flags.DEFINE_integer('num_epochs', 3, 'Number of epochs for training')
+tf.app.flags.DEFINE_integer('num_classes', 2, 'Number of classes')
+tf.app.flags.DEFINE_integer('batch_size', 1, 'Batch size')
 tf.app.flags.DEFINE_string('train_layers', 'fc8,fc7', 'Finetuning layers, seperated by commas')
 tf.app.flags.DEFINE_string('multi_scale', '', 'As preprocessing; scale the image randomly between 2 numbers and crop randomly at network\'s input size')
 tf.app.flags.DEFINE_string('training_file', '../data/train.txt', 'Training dataset file')
@@ -53,6 +55,8 @@ def main(_):
     flags_file.close()
 
     # Placeholders
+    tf.disable_eager_execution()
+
     x = tf.placeholder(tf.float32, [FLAGS.batch_size, 227, 227, 3])
     y = tf.placeholder(tf.float32, [None, FLAGS.num_classes])
     dropout_keep_prob = tf.placeholder(tf.float32)
